@@ -1,0 +1,41 @@
+body {
+  background: #457fca; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #5691c8,
+    #457fca
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #5691c8,
+    #457fca
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #fff;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.notesHeader,
+.notesBody,
+.notesFooter {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  margin: 0;
+}
+
+.notesHeader {
+  font-family: "Lobster", cursive;
+}
+.notesBody {
+  margin-top: 20px;
+  text-align: center;
+}
+.notesFooter {
+  bottom: 0;
+  position: fixed;
+  left: 0;
+  width: 100%;
+}

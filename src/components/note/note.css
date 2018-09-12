@@ -1,0 +1,13 @@
+.note {
+  background: #fff;
+  padding: 20px;
+  color: #000;
+  margin-top: 10px;
+}
+
+.ctrolDeleteNote {
+  cursor: pointer;
+  background: purple;
+  margin: 5px 0;
+  font-size: 18px;
+}
