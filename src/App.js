@@ -4,6 +4,9 @@ import "./App.css";
 import Note from "./components/note/note.jsx";
 import NoteForm from "./components/Note-Form/Note-Form.jsx";
 import MessageProcess from "./components/Component-Message";
+import firebase from "firebase";
+// import { DB_CONFIG } from "./config/config-firebase.js";
+// import "firebase/database";
 
 class App extends Component {
   constructor(props) {
@@ -16,6 +19,17 @@ class App extends Component {
         message: ""
       }
     };
+    // this.app = firebase.initializeApp(DB_CONFIG);
+    // this.db = this.app.database.ref().child("notes");
+  }
+  componentDidMount() {
+    // let { notes } = this.state;
+    // this.db.on("child_added", snap => {
+    //   notes.push({
+    //     noteId: snap.key,
+    //     noteContent: snap.val().noteContent
+    //   });
+    // });
   }
   activeMessageProcess = () => {
     //Agregar los datos para el mensaje

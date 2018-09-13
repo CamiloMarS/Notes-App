@@ -12,28 +12,14 @@ class Note extends Component {
     console.log(this.noteData);
   };
 
-  changeNoteToCompleted = () => {
-    console.log("Completed");
+  changeEstateNote = id => {
+    console.log("Change State");
   };
-  changeNoteToCancel = () => {
-    console.log("Cancel");
+  editThisNote = id => {
+    console.log("Edit");
   };
 
   render() {
-    //Opciones del dropdow
-    const trigger = (
-      <span>
-        <Icon name="thumbs up outline" /> Estado
-      </span>
-    );
-    const options = [
-      {
-        key: "completed",
-        text: "completed",
-        icon: "like",
-        onClick: this.changeNoteToCompleted
-      }
-    ];
     return (
       <Card id={this.noteId}>
         <Card.Content>
@@ -59,13 +45,21 @@ class Note extends Component {
               <Icon name="trash" />
               Eliminar
             </Label>
-            <Dropdown
-              trigger={trigger}
-              options={options}
-              pointing="top right"
-              icon={null}
-            />
-            <Label color="pink" horizontal className="buttonEfect">
+            <Label
+              color="blue"
+              horizontal
+              className="buttonEfect"
+              onClick={() => this.changeEstateNote(this.noteData.noteId)}
+            >
+              <Icon name="like" />
+              Estado
+            </Label>
+            <Label
+              color="pink"
+              horizontal
+              className="buttonEfect"
+              onClick={() => this.editThisNote(this.noteData.noteId)}
+            >
               <Icon name="edit" />
               Editar
             </Label>
