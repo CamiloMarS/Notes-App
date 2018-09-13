@@ -1,3 +1,4 @@
+@import url(~semantic-ui-css/semantic.min.css);
 body {
   background: #457fca; /* fallback for old browsers */
   background: -webkit-linear-gradient(
@@ -19,7 +20,6 @@ body {
 }
 
 .notesHeader,
-.notesBody,
 .notesFooter {
   background: rgba(0, 0, 0, 0.5);
   padding: 20px;
@@ -30,12 +30,20 @@ body {
   font-family: "Lobster", cursive;
 }
 .notesBody {
-  margin-top: 20px;
+  padding: 20px;
+  margin-top: 2px;
   text-align: center;
+  display: flex;
+  justify-content: space-between;
+  height: 80vh;
+}
+.contentNotesList {
+  width: 70%;
+  overflow: auto;
 }
 .notesFooter {
   bottom: 0;
-  position: fixed;
+  position: absolute;
   left: 0;
   width: 100%;
 }

@@ -1,13 +1,7 @@
-.note {
-  background: #fff;
-  padding: 20px;
-  color: #000;
-  margin-top: 10px;
+.buttonEfect {
+  cursor: pointer;
 }
 
-.ctrolDeleteNote {
-  cursor: pointer;
-  background: purple;
-  margin: 5px 0;
-  font-size: 18px;
+.buttonEfect:active {
+  box-shadow: 0px 0px 2px #000;
 }
