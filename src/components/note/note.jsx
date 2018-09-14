@@ -21,7 +21,7 @@ class Note extends Component {
 
   render() {
     return (
-      <Card id={this.noteId}>
+      <Card id={this.noteData.noteId}>
         <Card.Content>
           <Image
             floated="right"
