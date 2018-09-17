@@ -6,7 +6,6 @@ import NoteForm from "./components/Note-Form/Note-Form.jsx";
 import MessageProcess from "./components/Component-Message";
 import firebase from "firebase";
 import { DB_CONFIG } from "./config/config-firebase.js";
-// import "firebase/database";
 
 class App extends Component {
   constructor(props) {
@@ -23,15 +22,31 @@ class App extends Component {
     this.db = this.application
       .database()
       .ref()
-      .child("reactnotes-5ec2e");
+      .child("notes");
   }
   componentDidMount() {
     let { notes } = this.state;
+    //Cargar las notas de Realtime Database de Firebase
     this.db.on("child_added", snap => {
       notes.push({
         noteId: snap.key,
-        noteContent: snap.val().noteContent
+        noteTitle: snap.val().noteTitle,
+        noteBody: snap.val().noteBody,
+        dateDeliver: snap.val().dateDeliver,
+        statusNote: snap.val().statusNote || false
       });
+      console.log("No!!!!!!!");
+
+      this.setState({ notes });
+    });
+
+    //Escuchar cada vez que se borre una nota
+    this.db.on("child_removed", snap => {
+      for (let i = 0; i < notes.length; i++) {
+        if ((notes[i].noteId = snap.key)) {
+          notes.splice(i, 1);
+        }
+      }
       this.setState({ notes });
     });
   }
@@ -63,23 +78,34 @@ class App extends Component {
   saveNewNote = dataNote => {
     //Guardar la nueva NOTA en Firebase
     if (Object.keys(dataNote).length > 0) {
-      let { titulo, body } = dataNote;
+      let { titulo, body, dateDeliver } = dataNote;
       let { notes } = this.state;
-      // notes.push({
-      //   noteId: notes.length + 1,
-      //   noteTitle: titulo,
-      //   noteBody: body
-      // });
       this.db.push().set({
         noteId: notes.length + 1,
         noteTitle: titulo,
-        noteBody: body
+        noteBody: body,
+        dateDeliver
       });
     }
   };
 
   removeNote = noteId => {
-    alert(noteId);
+    this.db.child(noteId).remove();
+  };
+  changeNoteStatus = data => {
+    let { noteId, dateDeliver, noteBody, noteTitle, statusNote } = data.data;
+    let dataNote = {
+      dateDeliver,
+      noteBody,
+      noteTitle,
+      statusNote: data.statusNote
+    };
+
+    this.db.child(noteId).update(dataNote);
+    this.setStateMessage({
+      code: 406,
+      message: "El estado de la tarea ha cambiado a " + data.statusNote
+    });
   };
 
   render() {
@@ -87,6 +113,7 @@ class App extends Component {
       <div className="notesContainer">
         <div className="notesHeader">
           <h1>Aplicación con NodeJS y React</h1>
+          {this.activeMessageProcess()}
         </div>
         <div className="notesBody">
           <NoteForm
@@ -95,14 +122,13 @@ class App extends Component {
             notesTotal={this.state.notes.length}
           />
           <div className="contentNotesList">
-            {this.activeMessageProcess()}
-
             {this.state.notes.map(note => {
               return (
                 <Note
                   data={note}
                   key={note.noteId}
                   noteDelete={this.removeNote}
+                  changeStatus={this.changeNoteStatus}
                 />
               );
             })}

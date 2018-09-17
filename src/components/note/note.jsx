@@ -1,27 +1,29 @@
 import React, { Component } from "react";
-import { Card, Image, Label, Icon, Dropdown } from "semantic-ui-react";
+import { Card, Image, Label, Icon, Checkbox } from "semantic-ui-react";
 import "./note.css";
 
 class Note extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      homeworkState: false
+    };
     this.noteData = props.data;
   }
   deleteNote = id => {
     this.props.noteDelete(id);
-    console.log(this.noteData);
   };
-
-  changeEstateNote = id => {
-    console.log("Change State");
+  changeStatusHomewok = (data, id) => {
+    let homeworksCompleted = this.state.homeworkState === false ? true : false;
+    this.setState({ homeworkState: homeworksCompleted });
+    this.props.changeStatus({
+      data: data,
+      statusNote: this.state.homeworkState
+    });
   };
-  editThisNote = id => {
-    console.log("Edit");
-  };
-
   render() {
     return (
-      <Card id={this.noteData.noteId}>
+      <Card id={this.noteData.noteId} className="card-note">
         <Card.Content>
           <Image
             floated="right"
@@ -30,8 +32,30 @@ class Note extends Component {
           />
           <Card.Header textAlign="left">{this.noteData.noteTitle}</Card.Header>
           <Card.Description textAlign="left">
-            <strong>Descripción: </strong>
-            {this.noteData.noteBody}
+            <label>
+              <strong>Descripción: </strong>
+            </label>
+            <div className="note-container-body">
+              {this.noteData.noteBody}
+              <br />
+              <label>
+                <strong>Entrega: </strong>
+              </label>
+              {this.noteData.dateDeliver || "No específicado."}
+              <br />
+              <label>
+                <strong>¿Realizada? </strong>
+              </label>
+              <Checkbox
+                onChange={() =>
+                  this.changeStatusHomewok(
+                    this.props.data,
+                    this.noteData.noteId
+                  )
+                }
+                checked={this.noteData.statusNote || false}
+              />
+            </div>
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
@@ -44,24 +68,6 @@ class Note extends Component {
             >
               <Icon name="trash" />
               Eliminar
-            </Label>
-            <Label
-              color="blue"
-              horizontal
-              className="buttonEfect"
-              onClick={() => this.changeEstateNote(this.noteData.noteId)}
-            >
-              <Icon name="like" />
-              Estado
-            </Label>
-            <Label
-              color="pink"
-              horizontal
-              className="buttonEfect"
-              onClick={() => this.editThisNote(this.noteData.noteId)}
-            >
-              <Icon name="edit" />
-              Editar
             </Label>
           </div>
         </Card.Content>

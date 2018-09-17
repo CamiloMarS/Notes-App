@@ -28,18 +28,20 @@ body {
 
 .notesHeader {
   font-family: "Lobster", cursive;
+  display: flex;
 }
 .notesBody {
-  padding: 20px;
-  margin-top: 2px;
+  padding: 10px;
   text-align: center;
   display: flex;
   justify-content: space-between;
   height: 80vh;
 }
 .contentNotesList {
-  width: 70%;
+  width: 80%;
   overflow: auto;
+  display: flex;
+  justify-content: center;
 }
 .notesFooter {
   bottom: 0;

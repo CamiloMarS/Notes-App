@@ -21,6 +21,7 @@ class NoteForm extends Component {
   addNoteInformation = e => {
     let titulo = this.txtTitleNote.value;
     let body = this.txtBodyNote.value;
+    let dateDeliver = this.txtDateDeliver.value;
 
     if (titulo.length === 0 && body.length === 0) {
       this.sendMessageProcess("Código 5001", "Añade información de la nota!");
@@ -40,10 +41,15 @@ class NoteForm extends Component {
 
     let note = {
       titulo: titulo !== "" ? titulo : `Nota #${this.props.notesTotal + 1}`,
-      body
+      body,
+      dateDeliver: dateDeliver
     };
     this.props.addNewNote(note);
-    this.clearFormControls(this.txtTitleNote, this.txtBodyNote);
+    this.clearFormControls(
+      this.txtTitleNote,
+      this.txtBodyNote,
+      this.txtDateDeliver
+    );
   };
 
   render() {
@@ -62,6 +68,14 @@ class NoteForm extends Component {
           className="form-control textarea"
           ref={textarea => {
             this.txtBodyNote = textarea;
+          }}
+        />
+        <label className="form-label">Entrega: </label>
+        <input
+          type="date"
+          className="form-control"
+          ref={input => {
+            this.txtDateDeliver = input;
           }}
         />
         <button className="btnNoteForm" onClick={this.addNoteInformation}>

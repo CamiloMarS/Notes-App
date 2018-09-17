@@ -19,7 +19,7 @@
 .form-control {
   width: 80%;
   padding: 5px;
-  margin: 2px auto;
+  margin: 0 auto;
   border: none;
 }
 .textarea {
